@@ -1,0 +1,35 @@
+import pandas as pd
+
+# Calculate daily budget
+daily_budget = 4000 / 31
+
+# Create a DataFrame with 31 days
+df = pd.DataFrame({'Day': range(1, 32), 'Daily Budget': daily_budget})
+
+# Initialize columns for expenses and savings
+df['Expenses'] = 0
+df['Savings'] = daily_budget
+
+# Function to update expenses and savings
+def update_budget(day, expense):
+  """
+  Updates the expenses and savings for a given day.
+
+  Args:
+    day: The day of the month (1-31).
+    expense: The amount spent on that day.
+  """
+  df.loc[df['Day'] == day, 'Expenses'] = expense
+  df.loc[df['Day'] == day, 'Savings'] = df.loc[df['Day'] == day, 'Daily Budget'] - expense
+
+# Example usage:
+# Update expenses for a few days
+update_budget(1, 100)
+update_budget(5, 50)
+update_budget(15, 200)
+
+# Calculate total savings
+total_savings = df['Savings'].sum()
+
+print(df)
+print(f"Total Savings: {total_savings}")
